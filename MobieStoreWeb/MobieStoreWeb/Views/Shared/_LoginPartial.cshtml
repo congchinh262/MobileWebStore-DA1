@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li><a asp-area="" asp-controller="Home" asp-action="Login"><i class="fa fa-lock"></i> Hello @User.Identity.Name!</a></li>
+}
+else
+{
+    <li><a asp-area="" asp-controller="Home" asp-action="Login"><i class="fa fa-lock"></i> Register</a></li>
+
+    <li><a asp-area="" asp-controller="Home" asp-action="Login"><i class="fa fa-lock"></i> Login</a></li>
+
+}
