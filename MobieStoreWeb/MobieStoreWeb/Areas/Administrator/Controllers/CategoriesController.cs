@@ -148,6 +148,7 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
         private bool CategoryExists(short id)
         {
             return _context.Categories.Any(e => e.Id == id);

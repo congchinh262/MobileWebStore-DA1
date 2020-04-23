@@ -245,6 +245,21 @@ namespace MobieStoreWeb.Data.Migrations
                         {
                             Id = (short)2,
                             Name = "Samsung"
+                        },
+                        new
+                        {
+                            Id = (short)3,
+                            Name = "Oppo"
+                        },
+                        new
+                        {
+                            Id = (short)4,
+                            Name = "Xiaomi"
+                        },
+                        new
+                        {
+                            Id = (short)5,
+                            Name = "Huawei"
                         });
                 });
 
@@ -263,6 +278,87 @@ namespace MobieStoreWeb.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (short)1,
+                            Name = "Mobile"
+                        },
+                        new
+                        {
+                            Id = (short)2,
+                            Name = "Tablet"
+                        },
+                        new
+                        {
+                            Id = (short)3,
+                            Name = "Watch"
+                        },
+                        new
+                        {
+                            Id = (short)4,
+                            Name = "Laptop"
+                        },
+                        new
+                        {
+                            Id = (short)5,
+                            Name = "Accessory"
+                        });
+                });
+
+            modelBuilder.Entity("MobieStoreWeb.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CustummerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ShippingAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShippingName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(24)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustummerId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("MobieStoreWeb.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,4)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("MobieStoreWeb.Models.Product", b =>
@@ -281,19 +377,27 @@ namespace MobieStoreWeb.Data.Migrations
                     b.Property<string>("Decription")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime>("PublishDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(24)");
 
                     b.HasKey("Id");
 
@@ -379,6 +483,30 @@ namespace MobieStoreWeb.Data.Migrations
                     b.HasOne("MobieStoreWeb.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MobieStoreWeb.Models.Order", b =>
+                {
+                    b.HasOne("MobieStoreWeb.Models.ApplicationUser", "Custummer")
+                        .WithMany()
+                        .HasForeignKey("CustummerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MobieStoreWeb.Models.OrderDetail", b =>
+                {
+                    b.HasOne("MobieStoreWeb.Models.Order", "Order")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MobieStoreWeb.Models.Product", "Product")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
