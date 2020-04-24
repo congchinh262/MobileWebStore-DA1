@@ -8,19 +8,6 @@ namespace MobieStoreWeb.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Brands",
-                columns: table => new
-                {
-                    Id = table.Column<short>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 256, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Brands", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -31,6 +18,19 @@ namespace MobieStoreWeb.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Manufacturers",
+                columns: table => new
+                {
+                    Id = table.Column<short>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(maxLength: 256, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Manufacturers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -65,7 +65,7 @@ namespace MobieStoreWeb.Data.Migrations
                     Name = table.Column<string>(maxLength: 256, nullable: false),
                     CategoryId = table.Column<short>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    BrandId = table.Column<short>(nullable: false),
+                    ManufacturerId = table.Column<short>(nullable: false),
                     Decription = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     PublishDate = table.Column<DateTime>(nullable: false),
@@ -76,15 +76,15 @@ namespace MobieStoreWeb.Data.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Brands_BrandId",
-                        column: x => x.BrandId,
-                        principalTable: "Brands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Manufacturers_ManufacturerId",
+                        column: x => x.ManufacturerId,
+                        principalTable: "Manufacturers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -144,18 +144,6 @@ namespace MobieStoreWeb.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Brands",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
-                {
-                    { (short)1, "Apple" },
-                    { (short)2, "Samsung" },
-                    { (short)3, "Oppo" },
-                    { (short)4, "Xiaomi" },
-                    { (short)5, "Huawei" }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Name" },
                 values: new object[,]
@@ -165,6 +153,18 @@ namespace MobieStoreWeb.Data.Migrations
                     { (short)3, "Watch" },
                     { (short)4, "Laptop" },
                     { (short)5, "Accessory" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Manufacturers",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { (short)1, "Apple" },
+                    { (short)2, "Samsung" },
+                    { (short)3, "Oppo" },
+                    { (short)4, "Xiaomi" },
+                    { (short)5, "Huawei" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -188,14 +188,14 @@ namespace MobieStoreWeb.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_BrandId",
-                table: "Products",
-                column: "BrandId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_ManufacturerId",
+                table: "Products",
+                column: "ManufacturerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -213,10 +213,10 @@ namespace MobieStoreWeb.Data.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Brands");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Manufacturers");
         }
     }
 }

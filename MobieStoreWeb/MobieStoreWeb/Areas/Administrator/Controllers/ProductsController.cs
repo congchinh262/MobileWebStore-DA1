@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MobieStoreWeb.Areas.Administrator.ViewModels;
 using MobieStoreWeb.Data;
@@ -29,7 +30,10 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Products.ToListAsync());
+            return View(await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Manufacturer)
+                .ToListAsync());
         }
 
         public async Task<IActionResult> Details(short? id)
@@ -49,8 +53,10 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             return View(product);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.CategoryId = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name");
+            ViewBag.ManufacturerId = new SelectList(await _context.Manufacturers.ToListAsync(), "Id", "Name");
             return View();
         }
 
@@ -79,22 +85,25 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                 {
                     await viewModel.ImageFile.CopyToAsync(stream);
                 }
-                var product = new Product { 
+                var product = new Product
+                {
                     Id = viewModel.Id,
-                    Name=viewModel.Name,
-                    CategoryId=viewModel.CategoryId,
-                    Quantity=viewModel.Quantity,
-                    BrandId=viewModel.BrandId,
-                    Decription=viewModel.Decription,
-                    Price=viewModel.Price,
-                    PublishDate=viewModel.PublishDate,
-                    Status=viewModel.Status,
-                    Image  = fileName
+                    Name = viewModel.Name,
+                    CategoryId = viewModel.CategoryId,
+                    Quantity = viewModel.Quantity,
+                    ManufacturerId = viewModel.ManufacturerId,
+                    Decription = viewModel.Decription,
+                    Price = viewModel.Price,
+                    PublishDate = viewModel.PublishDate,
+                    Status = viewModel.Status,
+                    Image = fileName
                 };
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.CategoryId = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name", viewModel.CategoryId);
+            ViewBag.ManufacturerId = new SelectList(await _context.Manufacturers.ToListAsync(), "Id", "Name", viewModel.ManufacturerId);
             return View(viewModel);
         }
         public async Task<IActionResult> Edit(int? id)
@@ -113,9 +122,9 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Product product)
+        public async Task<IActionResult> Edit(int id, ProductViewModel viewModel)
         {
-            if (id != product.Id)
+            if (id != viewModel.Id)
             {
                 return NotFound();
             }
@@ -124,12 +133,20 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             {
                 try
                 {
-                    _context.Update(product);
+                    Product product = _context.Products.FirstOrDefault(p => p.Id == id);
+                    product.Id = viewModel.Id;
+                    product.Name = viewModel.Name;
+                    product.CategoryId = viewModel.CategoryId;
+                    product.ManufacturerId = viewModel.ManufacturerId;
+                    product.Price = viewModel.Price;
+                    product.PublishDate = viewModel.PublishDate;
+                    product.Quantity = viewModel.Quantity;
+                    product.Status = viewModel.Status;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
+                    if (!ProductExists(viewModel.Id))
                     {
                         return NotFound();
                     }
@@ -140,7 +157,7 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Delete(int? id)

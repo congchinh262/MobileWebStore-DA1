@@ -219,50 +219,6 @@ namespace MobieStoreWeb.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("MobieStoreWeb.Models.Brand", b =>
-                {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("smallint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Brands");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = (short)1,
-                            Name = "Apple"
-                        },
-                        new
-                        {
-                            Id = (short)2,
-                            Name = "Samsung"
-                        },
-                        new
-                        {
-                            Id = (short)3,
-                            Name = "Oppo"
-                        },
-                        new
-                        {
-                            Id = (short)4,
-                            Name = "Xiaomi"
-                        },
-                        new
-                        {
-                            Id = (short)5,
-                            Name = "Huawei"
-                        });
-                });
-
             modelBuilder.Entity("MobieStoreWeb.Models.Category", b =>
                 {
                     b.Property<short>("Id")
@@ -304,6 +260,50 @@ namespace MobieStoreWeb.Data.Migrations
                         {
                             Id = (short)5,
                             Name = "Accessory"
+                        });
+                });
+
+            modelBuilder.Entity("MobieStoreWeb.Models.Manufacturer", b =>
+                {
+                    b.Property<short>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("smallint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Manufacturers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (short)1,
+                            Name = "Apple"
+                        },
+                        new
+                        {
+                            Id = (short)2,
+                            Name = "Samsung"
+                        },
+                        new
+                        {
+                            Id = (short)3,
+                            Name = "Oppo"
+                        },
+                        new
+                        {
+                            Id = (short)4,
+                            Name = "Xiaomi"
+                        },
+                        new
+                        {
+                            Id = (short)5,
+                            Name = "Huawei"
                         });
                 });
 
@@ -368,9 +368,6 @@ namespace MobieStoreWeb.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<short>("BrandId")
-                        .HasColumnType("smallint");
-
                     b.Property<short>("CategoryId")
                         .HasColumnType("smallint");
 
@@ -380,6 +377,9 @@ namespace MobieStoreWeb.Data.Migrations
                     b.Property<string>("Image")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<short>("ManufacturerId")
+                        .HasColumnType("smallint");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -401,9 +401,9 @@ namespace MobieStoreWeb.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BrandId");
-
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ManufacturerId");
 
                     b.ToTable("Products");
                 });
@@ -513,15 +513,15 @@ namespace MobieStoreWeb.Data.Migrations
 
             modelBuilder.Entity("MobieStoreWeb.Models.Product", b =>
                 {
-                    b.HasOne("MobieStoreWeb.Models.Brand", "Brand")
-                        .WithMany("Products")
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("MobieStoreWeb.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MobieStoreWeb.Models.Manufacturer", "Manufacturer")
+                        .WithMany("Products")
+                        .HasForeignKey("ManufacturerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

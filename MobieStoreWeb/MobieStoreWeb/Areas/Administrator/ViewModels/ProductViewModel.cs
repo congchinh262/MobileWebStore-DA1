@@ -26,8 +26,8 @@ namespace MobieStoreWeb.Areas.Administrator.ViewModels
         [Range(0, int.MaxValue, ErrorMessage = "The {0} must be at least {1} at max {2}.")]
         public int Quantity { get; set; }
 
-        [Display(Name = "Brand")]
-        public short BrandId { get; set; }
+        [Display(Name = "Manufacturer")]
+        public short ManufacturerId { get; set; }
 
         [Display(Name = "Decription")]
         public string Decription { get; set; }

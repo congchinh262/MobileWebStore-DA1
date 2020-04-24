@@ -14,7 +14,7 @@ namespace MobieStoreWeb.Data
         {
         }
 
-        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Manufacturer> Manufacturers { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
@@ -86,28 +86,28 @@ namespace MobieStoreWeb.Data
                Id = 5,
                Name = "Accessory"
            });
-            builder.Entity<Brand>().HasData(
-            new Brand
+            builder.Entity<Manufacturer>().HasData(
+            new Manufacturer
             {
                 Id = 1,
                 Name = "Apple"
             },
-            new Brand
+            new Manufacturer
             {
                 Id = 2,
                 Name = "Samsung"
             },
-            new Brand
+            new Manufacturer
             {
                 Id = 3,
                 Name = "Oppo"
             },
-            new Brand
+            new Manufacturer
             {
                 Id = 4,
                 Name = "Xiaomi"
             },
-            new Brand
+            new Manufacturer
             {
                 Id = 5,
                 Name = "Huawei"

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MobieStoreWeb.Models
 {
-    public class Brand
+    public class Manufacturer
     {
         public short Id { get; set; }
 

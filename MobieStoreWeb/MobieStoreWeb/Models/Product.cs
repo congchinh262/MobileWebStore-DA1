@@ -27,10 +27,10 @@ namespace MobieStoreWeb.Models
 
         public virtual Category Category { get; set; }
 
-        [Display(Name = "Brand")]
-        public short BrandId { get; set; }
+        [Display(Name = "Manufacturer")]
+        public short ManufacturerId { get; set; }
 
-        public virtual Brand Brand { get; set; }
+        public virtual Manufacturer Manufacturer { get; set; }
 
         [Display(Name = "Decription")]
         public string Decription { get; set; }
