@@ -45,7 +45,7 @@ namespace MobieStoreWeb.Areas.Administrator.ViewModels
         [Display(Name = "Status")]
         public ProductStatus Status { get; set; }
 
-        [Required(ErrorMessage = "{0} is required.")]
+        [Display(Name = "Image")]
         public IFormFile ImageFile { get; set; }
     }
 }

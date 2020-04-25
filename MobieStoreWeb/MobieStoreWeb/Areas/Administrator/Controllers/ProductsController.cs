@@ -67,24 +67,22 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel viewModel)
         {
-            if (!FormFileValidator.IsValidFileSizeLimit(viewModel.ImageFile, 26214400))
+            var extension = "";
+            if (viewModel.ImageFile != null)
             {
-                ModelState.AddModelError("ImageFile", "File phải nhỏ hơn 25 MiB.");
-            }
-            if (!viewModel.ImageFile.IsValidImageFileExtension(out var extension))
-            {
-                ModelState.AddModelError("ImageFile", "Đuôi đéo hợp lệ.");
+                if (!FormFileValidator.IsValidFileSizeLimit(viewModel.ImageFile, 26214400))
+                {
+                    ModelState.AddModelError("ImageFile", "File phải nhỏ hơn 25 MiB.");
+                }
+
+                if (!viewModel.ImageFile.IsValidImageFileExtension(out extension))
+                {
+                    ModelState.AddModelError("ImageFile", "Đuôi đéo hợp lệ.");
+                }
             }
 
             if (ModelState.IsValid)
             {
-                var fileName = $"{Path.GetRandomFileName()}{extension}";
-                var savePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products");
-
-                using (var stream = new FileStream(Path.Combine(savePath, fileName), FileMode.Create))
-                {
-                    await viewModel.ImageFile.CopyToAsync(stream);
-                }
                 var product = new Product
                 {
                     Id = viewModel.Id,
@@ -96,8 +94,18 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                     Price = viewModel.Price,
                     PublishDate = viewModel.PublishDate,
                     Status = viewModel.Status,
-                    Image = fileName
                 };
+                if (viewModel.ImageFile != null)
+                {
+                    var fileName = $"{Path.GetRandomFileName()}{extension}";
+                    var savePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products");
+
+                    using (var stream = new FileStream(Path.Combine(savePath, fileName), FileMode.Create))
+                    {
+                        await viewModel.ImageFile.CopyToAsync(stream);
+                    }
+                    product.Image = fileName;
+                }
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -118,8 +126,22 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             {
                 return NotFound();
             }
-            return View(product);
+            ViewBag.CategoryId = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name", product.CategoryId);
+            ViewBag.ManufacturerId = new SelectList(await _context.Manufacturers.ToListAsync(), "Id", "Name", product.ManufacturerId);
+            return View(new ProductViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                ManufacturerId = product.ManufacturerId,
+                CategoryId = product.CategoryId,
+                PublishDate = product.PublishDate,
+                Quantity = product.Quantity,
+                Status = product.Status,
+                Decription = product.Decription,
+            });
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, ProductViewModel viewModel)
@@ -127,6 +149,20 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             if (id != viewModel.Id)
             {
                 return NotFound();
+            }
+
+            var extension = "";
+            if (viewModel.ImageFile != null)
+            {
+                if (!FormFileValidator.IsValidFileSizeLimit(viewModel.ImageFile, 26214400))
+                {
+                    ModelState.AddModelError("ImageFile", "File phải nhỏ hơn 25 MiB.");
+                }
+
+                if (!viewModel.ImageFile.IsValidImageFileExtension(out extension))
+                {
+                    ModelState.AddModelError("ImageFile", "Đuôi đéo hợp lệ.");
+                }
             }
 
             if (ModelState.IsValid)
@@ -142,6 +178,19 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                     product.PublishDate = viewModel.PublishDate;
                     product.Quantity = viewModel.Quantity;
                     product.Status = viewModel.Status;
+
+                    if (viewModel.ImageFile != null)
+                    {
+                        var fileName = $"{Path.GetRandomFileName()}{extension}";
+                        var savePath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "products");
+
+                        using (var stream = new FileStream(Path.Combine(savePath, fileName), FileMode.Create))
+                        {
+                            await viewModel.ImageFile.CopyToAsync(stream);
+                        }
+                        product.Image = fileName;
+                    }
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -157,6 +206,8 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.CategoryId = new SelectList(await _context.Categories.ToListAsync(), "Id", "Name", viewModel.CategoryId);
+            ViewBag.ManufacturerId = new SelectList(await _context.Manufacturers.ToListAsync(), "Id", "Name", viewModel.ManufacturerId);
             return View(viewModel);
         }
 
