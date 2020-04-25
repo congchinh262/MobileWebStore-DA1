@@ -67,6 +67,7 @@ namespace MobieStoreWeb
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Home/Login";
+                options.LogoutPath = "/Home/Logout";
             });
         }
 

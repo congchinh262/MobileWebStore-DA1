@@ -9,7 +9,7 @@ namespace MobieStoreWeb.Helpers
 {
     public static class FormFileValidator
     {
-        public static bool IsValidFileSizeLimit(IFormFile file, long fileSizeLimit) => file != null && file.Length > 0 && file.Length < fileSizeLimit;
+        public static bool IsValidFileSizeLimit(this IFormFile file, long fileSizeLimit) => file != null && file.Length > 0 && file.Length < fileSizeLimit;
 
         public static string GetFileExtension(string fileName) => Path.GetExtension(fileName).ToLowerInvariant();
 

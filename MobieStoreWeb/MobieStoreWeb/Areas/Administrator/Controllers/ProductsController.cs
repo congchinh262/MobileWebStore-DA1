@@ -70,14 +70,14 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             var extension = "";
             if (viewModel.ImageFile != null)
             {
-                if (!FormFileValidator.IsValidFileSizeLimit(viewModel.ImageFile, 26214400))
+                if (!viewModel.ImageFile.IsValidFileSizeLimit(26214400))
                 {
-                    ModelState.AddModelError("ImageFile", "File phải nhỏ hơn 25 MiB.");
+                    ModelState.AddModelError("ImageFile", "File size must be less than 25 MiB.");
                 }
 
                 if (!viewModel.ImageFile.IsValidImageFileExtension(out extension))
                 {
-                    ModelState.AddModelError("ImageFile", "Đuôi đéo hợp lệ.");
+                    ModelState.AddModelError("ImageFile", "Invalid file extension.");
                 }
             }
 
@@ -154,14 +154,14 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             var extension = "";
             if (viewModel.ImageFile != null)
             {
-                if (!FormFileValidator.IsValidFileSizeLimit(viewModel.ImageFile, 26214400))
+                if (!viewModel.ImageFile.IsValidFileSizeLimit(26214400))
                 {
-                    ModelState.AddModelError("ImageFile", "File phải nhỏ hơn 25 MiB.");
+                    ModelState.AddModelError("ImageFile", "File size must be less than 25 MiB.");
                 }
 
                 if (!viewModel.ImageFile.IsValidImageFileExtension(out extension))
                 {
-                    ModelState.AddModelError("ImageFile", "Đuôi đéo hợp lệ.");
+                    ModelState.AddModelError("ImageFile", "Invalid file extension.");
                 }
             }
 

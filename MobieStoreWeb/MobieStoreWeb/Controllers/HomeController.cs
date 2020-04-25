@@ -70,6 +70,27 @@ namespace MobieStoreWeb.Controllers
             return View(viewModel);
         }
 
+        public IActionResult Logout()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout(string returnUrl = null)
+        {
+
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(Logout));
+            }
+        }
+
         public IActionResult Privacy()
         {
             return View();
