@@ -44,15 +44,28 @@ namespace MobieStoreWeb
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options =>
             {
-                options.SignIn.RequireConfirmedAccount = true;
-                options.Password.RequiredLength = 6;
+                //options.SignIn.RequireConfirmedAccount = true;
+                //options.Password.RequiredLength = 6;
+                //options.Password.RequireDigit = false;
+                //options.Password.RequireNonAlphanumeric = false;
+                //options.Password.RequireLowercase = false;
+                //options.Password.RequireUppercase = false;
+                //Password Setting
                 options.Password.RequireDigit = false;
-                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
-            })
-                .AddRoles<IdentityRole>()
+                options.Password.RequiredLength = 6;
+                //User Setting
+                options.User.AllowedUserNameCharacters =
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = false;
+                //Lockout setting
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.MaxFailedAccessAttempts = 5;
+            }).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 options.DefaultRequestCulture = new RequestCulture(culture: _defaultCulture, uiCulture: _defaultCulture);
@@ -66,8 +79,10 @@ namespace MobieStoreWeb
             services.AddRazorPages();
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Home/Login";
-                options.LogoutPath = "/Home/Logout";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath = "/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
             });
         }
 

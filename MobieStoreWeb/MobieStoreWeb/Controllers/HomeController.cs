@@ -33,64 +33,7 @@ namespace MobieStoreWeb.Controllers
         {
             return View();
         }
-        public IActionResult Login(string returnUrl = null)
-        {
-            returnUrl = returnUrl ?? Url.Content("~/");
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel viewModel, string returnUrl = null)
-        {
-            if (ModelState.IsValid)
-            {
-                var result = await _signInManager.PasswordSignInAsync(viewModel.Email, viewModel.Password, viewModel.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
-                }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = viewModel.RememberMe });
-                }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(viewModel);
-                }
-            }
-
-            return View(viewModel);
-        }
-
-        public IActionResult Logout()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Logout(string returnUrl = null)
-        {
-
-            await _signInManager.SignOutAsync();
-            _logger.LogInformation("User logged out.");
-            if (returnUrl != null)
-            {
-                return LocalRedirect(returnUrl);
-            }
-            else
-            {
-                return RedirectToAction(nameof(Logout));
-            }
-        }
-
+  
         public IActionResult Privacy()
         {
             return View();
