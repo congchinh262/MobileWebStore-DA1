@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MobieStoreWeb.Data;
+using MobieStoreWeb.Helpers;
+using MobieStoreWeb.Models;
+
+namespace MobieStoreWeb.Controllers
+{
+    public class ProductsController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+
+
+        public ProductsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+        public async Task<IActionResult> Index(string search, int? category, int? manufacturer, int? page = 1)
+        {
+            ViewBag.Categories = await _context.Categories.ToListAsync();
+            ViewBag.Manufacturers = await _context.Manufacturers.ToListAsync();
+            var products = _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Manufacturer)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                products = products.Where(p => p.Name.Contains(search) || 
+                p.Category.Name.Contains(search) || 
+                p.Manufacturer.Name.Contains(search));
+            }
+
+            if (category.HasValue)
+            {
+                products = products.Where(p => p.CategoryId == category); 
+            }
+
+            if (manufacturer.HasValue)
+            {
+                products = products.Where(p => p.ManufacturerId == manufacturer);
+            }
+
+            return View(await PaginatedList<Product>.CreateAsync(products, page.Value, 1));
+        }
+    }
+}

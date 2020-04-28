@@ -92,7 +92,7 @@
                                 <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
                                 <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                                 <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                           <partial name="_LoginPartial" />
+                                <partial name="_LoginPartial" />
                             </ul>
                         </div>
                     </div>
@@ -140,7 +140,9 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="search_box pull-right">
-                            <input type="text" placeholder="Search" />
+                            <form asp-controller="Products" asp-action="Index" method="get">
+                                <input type="search" name="search" placeholder="Search" onkeypress="if (event.keyCode == 13) {$(event).closest('form').submit()}"/>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -300,7 +302,7 @@
             <div class="container">
                 <div class="row">
                     <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                    <p class="pull-right"><partial name="_SelectLanguagePartial"/></p>
+                    <p class="pull-right"><partial name="_SelectLanguagePartial" /></p>
                 </div>
             </div>
         </div>
