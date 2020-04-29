@@ -19,7 +19,7 @@ namespace MobieStoreWeb.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> Index(string search, int? category, int? manufacturer, int? page = 1)
+        public async Task<IActionResult> Index(string search, List<int> categories, List<int> manufacturers, int? page = 1)
         {
             ViewBag.Categories = await _context.Categories.ToListAsync();
             ViewBag.Manufacturers = await _context.Manufacturers.ToListAsync();
@@ -30,21 +30,19 @@ namespace MobieStoreWeb.Controllers
 
             if (!string.IsNullOrWhiteSpace(search))
             {
-                products = products.Where(p => p.Name.Contains(search) || 
-                p.Category.Name.Contains(search) || 
+                products = products.Where(p => p.Name.Contains(search) ||
+                p.Category.Name.Contains(search) ||
                 p.Manufacturer.Name.Contains(search));
             }
 
-            if (category.HasValue)
+            if (categories?.Count > 0)
             {
-                products = products.Where(p => p.CategoryId == category); 
+                products = products.Where(p => categories.Contains(p.CategoryId));
             }
-
-            if (manufacturer.HasValue)
+            if (manufacturers?.Count > 0)
             {
-                products = products.Where(p => p.ManufacturerId == manufacturer);
+                products = products.Where(p => manufacturers.Contains(p.ManufacturerId));
             }
-
             return View(await PaginatedList<Product>.CreateAsync(products, page.Value, 1));
         }
     }
