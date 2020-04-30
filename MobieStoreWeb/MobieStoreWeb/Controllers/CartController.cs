@@ -18,12 +18,12 @@ namespace MobieStoreWeb.Controllers
         {
             _context = context;
         }
-        
+
         [HttpPost]
         public IActionResult AddToCart(int id)
         {
             var product = _context.Products.Find(id);
-            if(product == null)
+            if (product == null)
             {
                 return NotFound();
             }
@@ -40,12 +40,12 @@ namespace MobieStoreWeb.Controllers
                 cart.Items.Add(new CartItemViewModel
                 {
                     Id = product.Id,
-                    Name=product.Name,
-                    CategoryId=product.CategoryId,
-                    ManufacturerId=product.ManufacturerId,
-                    Price=product.Price,
-                    Quantity=1,
-                    Image=product.Image,
+                    Name = product.Name,
+                    CategoryId = product.CategoryId,
+                    ManufacturerId = product.ManufacturerId,
+                    Price = product.Price,
+                    Quantity = 1,
+                    Image = product.Image,
                 });
             }
             else
@@ -73,6 +73,26 @@ namespace MobieStoreWeb.Controllers
                 cart = new CartViewModel();
                 HttpContext.Session.Set(SessionKeyCart, cart);
             }
+            return View(cart);
+        }
+
+        [HttpPost]
+        public IActionResult Index(CartViewModel viewModel) // Update Quantity
+        {
+            var cart = HttpContext.Session.Get<CartViewModel>(SessionKeyCart);
+            cart.Items.ForEach(item =>
+            {
+                item.Quantity = viewModel.Items.FirstOrDefault(itemVM => itemVM.Id == item.Id)?.Quantity ?? item.Quantity;
+                if (item.Quantity < 1)
+                {
+                    item.Quantity = 1;
+                }
+                if (item.Quantity > 5)
+                {
+                    item.Quantity = 5;
+                }
+            });
+            HttpContext.Session.Set(SessionKeyCart, cart);
             return View(cart);
         }
     }

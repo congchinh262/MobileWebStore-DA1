@@ -43,7 +43,7 @@ namespace MobieStoreWeb.Controllers
             {
                 products = products.Where(p => manufacturers.Contains(p.ManufacturerId));
             }
-            return View(await PaginatedList<Product>.CreateAsync(products, page.Value, 1));
+            return View(await PaginatedList<Product>.CreateAsync(products, page.Value, 12));
         }
     }
 }

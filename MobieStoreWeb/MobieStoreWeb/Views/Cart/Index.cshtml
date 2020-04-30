@@ -1,18 +1,76 @@
 ﻿@model CartViewModel
 @{
     ViewData["Title"] = "Cart";
+    var index = 0;
 }
 
+<section id="cart_items">
     <div class="container">
-        @if (Model.Items?.Count == 0)
-	{
-		 <div>Mua hang` di9 may`</div>
-        }
-        else
-        {
-            foreach(var item in Model.Items)
+        <div class="breadcrumbs">
+            <ol class="breadcrumb">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="active">Shopping Cart</li>
+            </ol>
+        </div>
+        <div>
+            @if (Model.Items?.Count > 0)
             {
-                <div>@item.Name @item.Quantity</div>
+                <form asp-action="Index" method="post">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td><img src="~/images/products/@item.Image" style="width: 110px" /></td>
+                                    <td>@item.Name</td>
+                                    <td>@item.Price</td>
+                                    <td>
+                                        <input type="hidden" name="Items[@index].Id" value="@item.Id" />
+                                        <input type="number" name="Items[@index].Quantity" value="@item.Quantity" class="form-control" min="1" max="5" />
+                                    </td>
+                                    <td>@item.Total</td>
+                                    <td>
+                                        <button type="button" onclick="removeItem('@item.Id')" class="btn btn-primary">
+                                            X
+                                        </button>
+                                    </td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-info">Update Quantity</button>
+                    <div>Total: @Model.Total</div>
+                </form>
             }
-        }
+            else
+            {
+                <span>Mua hàng đi mày hỏi hỏi con cặc</span>
+            }
+        </div>
     </div>
+</section>
+
+<form asp-action="RemoveFromCart" method="post" id="remove-form" class="hidden">
+    <input type="hidden" name="Id" />
+</form>
+
+@section Scripts{
+    <script>
+        function removeItem(id) {
+            var form = $('#remove-form');
+            form.find('input[name=Id]').val(id);
+            form.submit();
+        }
+    </script>
+}
