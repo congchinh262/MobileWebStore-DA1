@@ -45,5 +45,21 @@ namespace MobieStoreWeb.Controllers
             }
             return View(await PaginatedList<Product>.CreateAsync(products, page.Value, 12));
         }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return NotFound();
+            }
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.Manufacturer)
+                .FirstOrDefaultAsync(p => p.Id == id);
+            if(product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
     }
 }

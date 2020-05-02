@@ -36,7 +36,7 @@
                                     <td>@item.Price</td>
                                     <td>
                                         <input type="hidden" name="Items[@index].Id" value="@item.Id" />
-                                        <input type="number" name="Items[@index].Quantity" value="@item.Quantity" class="form-control" min="1" max="5" />
+                                        <input type="number" name="Items[@index].Quantity" value="@item.Quantity" min="1" max="5" />
                                     </td>
                                     <td>@item.Total</td>
                                     <td>
@@ -49,8 +49,12 @@
                             }
                         </tbody>
                     </table>
-                    <button type="submit" class="btn btn-info">Update Quantity</button>
-                    <div>Total: @Model.Total</div>
+                    <div>Total: @Model.Total ĐLĐ</div>
+                    <button type="submit" class="btn btn-primary">Update Quantity</button>
+                    <a class="btn btn-primary">Checkout</a>
+                </form>
+                <form asp-action="RemoveFromCart" method="post" id="remove-form" class="hidden">
+                    <input type="hidden" name="Id" />
                 </form>
             }
             else
@@ -60,10 +64,6 @@
         </div>
     </div>
 </section>
-
-<form asp-action="RemoveFromCart" method="post" id="remove-form" class="hidden">
-    <input type="hidden" name="Id" />
-</form>
 
 @section Scripts{
     <script>

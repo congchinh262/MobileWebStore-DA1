@@ -51,6 +51,10 @@ namespace MobieStoreWeb.Controllers
             else
             {
                 item.Quantity++;
+                if (item.Quantity > 5)
+                {
+                    item.Quantity = 5;
+                }
             }
             HttpContext.Session.Set(SessionKeyCart, cart);
             return RedirectToAction(nameof(Index));

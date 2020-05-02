@@ -59,7 +59,7 @@ namespace MobieStoreWeb.Models
     }
 
     public enum ProductStatus:byte {
-        OutOfSock,
+        OutOfStock,
         Available,
         CommingSoon,
     }
