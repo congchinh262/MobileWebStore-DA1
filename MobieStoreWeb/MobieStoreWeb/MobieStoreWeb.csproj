@@ -24,6 +24,8 @@
     <Compile Remove="Data\Migrations\20200423082706_InitTables.Designer.cs" />
     <Compile Remove="Data\Migrations\20200423085826_InitTables.cs" />
     <Compile Remove="Data\Migrations\20200423085826_InitTables.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200424075506_InitTables.cs" />
+    <Compile Remove="Data\Migrations\20200424075506_InitTables.Designer.cs" />
   </ItemGroup>
 
 

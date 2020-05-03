@@ -15,26 +15,25 @@ namespace MobieStoreWeb.Models
         [Display(Name = "Custommer")]
         public string CustummerId { get; set; }
 
-        public virtual ApplicationUser Custummer { get; set; }
+        public virtual ApplicationUser Custummer { get; set; }      
 
-        [Required(ErrorMessage = "{0} is required.")]
-        [Display(Name = "Order Date")]
-        public DateTime OrderDate { get; set; }
-        
-        [Column(TypeName = "nvarchar(24)")]
-        [Required(ErrorMessage = "{0} is required.")]
-        [Display(Name = "Status")]
-        public OrderStatus Status { get; set; }
-       
-        [Required(ErrorMessage = "{0} is required.")]
-        [Display(Name = "Shipping Address")]
-
-        public string ShippingAddress { get; set; }
-       
         [Required(ErrorMessage = "{0} is required.")]
         [Display(Name = "Shipping Name")]
         public string ShippingName { get; set; }
 
+        [Required(ErrorMessage = "{0} is required.")]
+        [Display(Name = "Shipping Address")]
+
+        public string ShippingAddress { get; set; }
+
+        [Column(TypeName = "nvarchar(24)")]
+        [Required(ErrorMessage = "{0} is required.")]
+        [Display(Name = "Status")]
+        public OrderStatus Status { get; set; }
+
+        [Required(ErrorMessage = "{0} is required.")]
+        [Display(Name = "Order Date")]
+        public DateTime OrderDate { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
 

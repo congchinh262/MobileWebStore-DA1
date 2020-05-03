@@ -40,10 +40,10 @@ namespace MobieStoreWeb.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustummerId = table.Column<string>(nullable: false),
-                    OrderDate = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(24)", nullable: false),
+                    ShippingName = table.Column<string>(nullable: false),
                     ShippingAddress = table.Column<string>(nullable: false),
-                    ShippingName = table.Column<string>(nullable: false)
+                    Status = table.Column<string>(type: "nvarchar(24)", nullable: false),
+                    OrderDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,15 +62,15 @@ namespace MobieStoreWeb.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(maxLength: 256, nullable: false),
                     CategoryId = table.Column<short>(nullable: false),
-                    Quantity = table.Column<int>(nullable: false),
                     ManufacturerId = table.Column<short>(nullable: false),
-                    Decription = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(maxLength: 256, nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    PublishDate = table.Column<DateTime>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    Image = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
                     Status = table.Column<string>(type: "nvarchar(24)", nullable: false),
-                    Image = table.Column<string>(nullable: false)
+                    PublishDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

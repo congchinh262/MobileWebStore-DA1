@@ -10,7 +10,7 @@ using MobieStoreWeb.Data;
 namespace MobieStoreWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200424075506_InitTables")]
+    [Migration("20200503082048_InitTables")]
     partial class InitTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -373,7 +373,7 @@ namespace MobieStoreWeb.Data.Migrations
                     b.Property<short>("CategoryId")
                         .HasColumnType("smallint");
 
-                    b.Property<string>("Decription")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Image")

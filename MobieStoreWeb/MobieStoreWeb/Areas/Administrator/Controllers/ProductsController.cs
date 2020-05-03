@@ -90,7 +90,7 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                     CategoryId = viewModel.CategoryId,
                     Quantity = viewModel.Quantity,
                     ManufacturerId = viewModel.ManufacturerId,
-                    Decription = viewModel.Decription,
+                    Description = viewModel.Description,
                     Price = viewModel.Price,
                     PublishDate = viewModel.PublishDate,
                     Status = viewModel.Status,
@@ -138,7 +138,7 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                 PublishDate = product.PublishDate,
                 Quantity = product.Quantity,
                 Status = product.Status,
-                Decription = product.Decription,
+                Description = product.Description,
             });
         }
 
