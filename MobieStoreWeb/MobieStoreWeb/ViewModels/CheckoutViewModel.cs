@@ -1,21 +1,15 @@
-﻿using System;
+﻿using MobieStoreWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MobieStoreWeb.Models
+namespace MobieStoreWeb.ViewModels
 {
-    public class Order
+    public class CheckoutViewModel
     {
-        public int Id { get; set; }
-
-        [Display(Name = "User")]
-        public string UserId { get; set; }
-
-        public virtual ApplicationUser User { get; set; }
-
         #region Shipping
         [Required(ErrorMessage = "{0} is required.")]
         [Display(Name = "Shipping Name")]
@@ -55,44 +49,8 @@ namespace MobieStoreWeb.Models
         public PaymentStatus PaymentStatus { get; set; }
         #endregion
 
-        [Column(TypeName = "nvarchar(24)")]
-        [Required(ErrorMessage = "{0} is required.")]
-        [Display(Name = "Status")]
-        public OrderStatus Status { get; set; }
+        public bool IsGuest { get; set; }
 
-        [Required(ErrorMessage = "{0} is required.")]
-        [Display(Name = "Order Date")]
-        public DateTime OrderDate { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-
-
-    }
-    public enum OrderStatus
-    {
-        Pending,
-        Processing,
-        Completed,
-        Cancelled
-    }
-
-    public enum PaymentStatus
-    {
-        Pending,
-        Unpaid,
-        Paid,
-        Refunded,
-        Voided,
-    }
-
-    public enum PaymentMethod
-    {
-        COD,
-        Paypal,
-    }
-
-    public enum DeliveryOption
-    {
-        Normal,
-        Express,
+        public CartViewModel Cart{ get; set; }
     }
 }

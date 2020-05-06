@@ -80,14 +80,13 @@ namespace MobieStoreWeb
                 options.SupportedCultures = _supportedCultures;
                 options.SupportedUICultures = _supportedCultures;
             });
-            services.AddLocalization(options => options.ResourcesPath = "Resources");                
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
             services.AddRazorPages();
             services.ConfigureApplicationCookie(options =>
             {
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
@@ -159,7 +158,10 @@ namespace MobieStoreWeb
                 {
                     UserName = email,
                     Email = email,
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    Name = "Lê Công Nai",
+                    Address = "QuyBu God",
+                    PhoneNumber = "0123456789"
                 };
                 var userResult = await userManager.CreateAsync(adminUser, "123456");
                 if (userResult.Succeeded)

@@ -7,6 +7,16 @@ namespace MobieStoreWeb.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "Address",
+                table: "AspNetUsers",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Name",
+                table: "AspNetUsers",
+                nullable: true);
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
@@ -39,9 +49,16 @@ namespace MobieStoreWeb.Data.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustummerId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: true),
                     ShippingName = table.Column<string>(nullable: false),
                     ShippingAddress = table.Column<string>(nullable: false),
+                    ShippingPhoneNumber = table.Column<string>(nullable: false),
+                    DeliveryOption = table.Column<string>(nullable: false),
+                    BillingName = table.Column<string>(nullable: false),
+                    BillingAddress = table.Column<string>(nullable: false),
+                    BillingPhoneNumber = table.Column<string>(nullable: false),
+                    PaymentMethod = table.Column<string>(nullable: false),
+                    PaymentStatus = table.Column<string>(nullable: false),
                     Status = table.Column<string>(type: "nvarchar(24)", nullable: false),
                     OrderDate = table.Column<DateTime>(nullable: false)
                 },
@@ -49,11 +66,11 @@ namespace MobieStoreWeb.Data.Migrations
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_CustummerId",
-                        column: x => x.CustummerId,
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,9 +190,9 @@ namespace MobieStoreWeb.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustummerId",
+                name: "IX_Orders_UserId",
                 table: "Orders",
-                column: "CustummerId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductComments_ProductId",
@@ -217,6 +234,14 @@ namespace MobieStoreWeb.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Manufacturers");
+
+            migrationBuilder.DropColumn(
+                name: "Address",
+                table: "AspNetUsers");
+
+            migrationBuilder.DropColumn(
+                name: "Name",
+                table: "AspNetUsers");
         }
     }
 }

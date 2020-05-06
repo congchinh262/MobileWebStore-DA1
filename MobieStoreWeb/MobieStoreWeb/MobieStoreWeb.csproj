@@ -26,6 +26,18 @@
     <Compile Remove="Data\Migrations\20200423085826_InitTables.Designer.cs" />
     <Compile Remove="Data\Migrations\20200424075506_InitTables.cs" />
     <Compile Remove="Data\Migrations\20200424075506_InitTables.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200503082048_InitTables.cs" />
+    <Compile Remove="Data\Migrations\20200503082048_InitTables.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200504080157_FixSomeThingOcCho.cs" />
+    <Compile Remove="Data\Migrations\20200504080157_FixSomeThingOcCho.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200504083718_AlterUsersTableAndOrdersTable.cs" />
+    <Compile Remove="Data\Migrations\20200504083718_AlterUsersTableAndOrdersTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200504090959_AlterOrdersTable.cs" />
+    <Compile Remove="Data\Migrations\20200504090959_AlterOrdersTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200506071443_InitTables.cs" />
+    <Compile Remove="Data\Migrations\20200506071443_InitTables.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200506071906_InitTables.cs" />
+    <Compile Remove="Data\Migrations\20200506071906_InitTables.Designer.cs" />
   </ItemGroup>
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MobieStoreWeb.Data;
 using MobieStoreWeb.Helpers;
 using MobieStoreWeb.ViewModels;
@@ -11,7 +12,7 @@ namespace MobieStoreWeb.Controllers
 {
     public class CartController : Controller
     {
-        public const string SessionKeyCart = "_Cart";
+        private const string SessionKeyCart = "_Cart";
         private readonly ApplicationDbContext _context;
 
         public CartController(ApplicationDbContext context)

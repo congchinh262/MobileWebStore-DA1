@@ -52,7 +52,22 @@ namespace MobieStoreWeb.Data
                 .Property(p => p.Status)
                 .HasConversion(
                 value => value.ToString(),
-                value => (OrderStatus)Enum.Parse(typeof(OrderStatus), value));
+                value => (OrderStatus)Enum.Parse(typeof(OrderStatus), value));  
+            builder.Entity<Order>()
+                .Property(p => p.PaymentStatus)
+                .HasConversion(
+                value => value.ToString(),
+                value => (PaymentStatus)Enum.Parse(typeof(PaymentStatus), value));
+              builder.Entity<Order>()
+                .Property(p => p.DeliveryOption)
+                .HasConversion(
+                value => value.ToString(),
+                value => (DeliveryOption)Enum.Parse(typeof(DeliveryOption), value));
+              builder.Entity<Order>()
+                .Property(p => p.PaymentMethod)
+                .HasConversion(
+                value => value.ToString(),
+                value => (PaymentMethod)Enum.Parse(typeof(PaymentMethod), value));
             
             InitData(builder);
             base.OnModelCreating(builder);

@@ -51,7 +51,7 @@
                     </table>
                     <div>Total: @Model.Total ĐLĐ</div>
                     <button type="submit" class="btn btn-primary">Update Quantity</button>
-                    <a class="btn btn-primary">Checkout</a>
+                    <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Checkout</a>
                 </form>
                 <form asp-action="RemoveFromCart" method="post" id="remove-form" class="hidden">
                     <input type="hidden" name="Id" />
@@ -59,6 +59,7 @@
             }
             else
             {
+                //Sửa đi
                 <span>Mua hàng đi mày hỏi hỏi con cặc</span>
             }
         </div>
