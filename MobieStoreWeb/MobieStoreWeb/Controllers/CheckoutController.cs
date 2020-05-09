@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MobieStoreWeb.Data;
 using MobieStoreWeb.Helpers;
 using MobieStoreWeb.Models;
+using MobieStoreWeb.Services;
 using MobieStoreWeb.ViewModels;
 
 namespace MobieStoreWeb.Controllers
@@ -17,14 +18,19 @@ namespace MobieStoreWeb.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IEmailSender _emailSender;
 
-        public CheckoutController(ApplicationDbContext context,
+        public CheckoutController(
+            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IEmailSender emailSender
+            )
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailSender = emailSender;
         }
 
         public async Task<IActionResult> Index()
@@ -123,6 +129,20 @@ namespace MobieStoreWeb.Controllers
                     _context.Orders.Add(order);
                     await _context.SaveChangesAsync();
                     await transcation.CommitAsync();
+                    if (!viewModel.IsGuest && _signInManager.IsSignedIn(User))
+                    {
+                        var tableBody = "";
+                        viewModel.Cart.Items.ForEach(item =>
+                        {
+                            tableBody += @$"<tr><td>{item.Name}</td><td>{item.Price}</td><td>{item.Quantity}</td><td>{item.Total}</td></tr>";
+                        });
+                        var tableFoot = @$"<tr><th colspan=""2""></th><th>Totals:</th><th>{viewModel.Cart.Total}</th></tr>";
+                        var style = "<style>.colored{color: blue;}#body{font-size: 14px;}table{border-collapse: collapse; width: 100%;}th{text-align: left;}th, td{padding: .5rem 1rem;}thead{background-color: #cceeff;}tr{border: 1px groove #fafafa;}</style>";
+                        var content = @$"<html><head>{style}</head><body> <div id=""body""> <p>Order Bill</p><table> <thead> <tr> <th>Name</th> <th>Price</th> <th>Quantity</th> <th>Total</th> </tr></thead> <tbody>{tableBody}</tbody> <tfoot>{tableFoot}</tfoot> </table> <p><b>Ngay dat hang:</b>{order.OrderDate}</p><p><b>Ma hoa don:</b>{order.Id}</p><p><b>Tong tien dat hang:</b>{viewModel.Cart.Total}</p><br><p>Thanks for shopping at my fucking shop dm cai template lon!!!</p><p>Call center</p></div></body></html>";
+                        var user = await _userManager.GetUserAsync(User);
+                        await _emailSender.SendEmailAsync(user.Email, "E-Bill ", content);
+
+                    }
                     HttpContext.Session.Set<CartViewModel>(SessionKeyCart, null);
                 }
                 catch (Exception)

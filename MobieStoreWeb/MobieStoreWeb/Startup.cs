@@ -16,6 +16,8 @@ using MobieStoreWeb.Models;
 using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
+using MobieStoreWeb.Helpers;
+using MobieStoreWeb.Services;
 
 namespace MobieStoreWeb
 {
@@ -39,6 +41,9 @@ namespace MobieStoreWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+
             services.AddDistributedMemoryCache();
 
             services.AddSession(options =>
@@ -150,7 +155,7 @@ namespace MobieStoreWeb
                     roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
-            var email = "congchinh@gmail.com";
+            var email = "congchinh262@gmail.com";
             var user = await userManager.FindByEmailAsync(email);
             if (user == null)
             {
