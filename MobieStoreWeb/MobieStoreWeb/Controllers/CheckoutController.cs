@@ -36,7 +36,7 @@ namespace MobieStoreWeb.Controllers
         public async Task<IActionResult> Index()
         {
             var cart = HttpContext.Session.Get<CartViewModel>(SessionKeyCart);
-            if (cart?.Items?.Count == 0)
+            if (cart == null || cart.Items?.Count == 0)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -73,7 +73,7 @@ namespace MobieStoreWeb.Controllers
                 return View(viewModel);
             }
 
-            if (viewModel.Cart?.Items?.Count == 0)
+            if (viewModel.Cart == null || viewModel.Cart.Items?.Count == 0)
             {
                 return NotFound();
             }

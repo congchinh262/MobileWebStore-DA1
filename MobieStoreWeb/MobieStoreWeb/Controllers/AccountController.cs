@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using MobieStoreWeb.Data;
 using MobieStoreWeb.Models;
 using MobieStoreWeb.ViewModels;
 
@@ -17,20 +20,100 @@ namespace MobieStoreWeb.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<AccountController> _logger;
         private readonly IEmailSender _emailSender;
 
         public AccountController(ILogger<AccountController> logger,
+            ApplicationDbContext context,
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
             IEmailSender emailSender)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
             _logger = logger;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _context = context;
             _emailSender = emailSender;
         }
+
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            return View(new UserInfoViewModel
+            {
+                Name = user.Name,
+                Address = user.Address,
+                PhoneNumber = user.PhoneNumber,
+            });
+        }
+
+
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Index(UserInfoViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            var user = await _userManager.GetUserAsync(User);
+            user.Name = viewModel.Name;
+            user.Address = viewModel.Address;
+            user.PhoneNumber = viewModel.PhoneNumber;
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Orders()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            await _context.Entry(user).Collection(u => u.Orders).LoadAsync();
+            return View(user.Orders);
+        }
+
+        [Authorize]
+        [Route("[controller]/Orders/{id:int}")]
+        public async Task<IActionResult> OrderDetails(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
+            order.OrderDetails = await _context
+                .OrderDetails
+                .Where(od => od.OrderId == order.Id)
+                .Include(od => od.Product)
+                .AsNoTracking()
+                .ToListAsync();
+
+            if (order.UserId != _userManager.GetUserId(User))
+            {
+                return NotFound();
+            }
+            return View(order);
+        }
+
+        //[Authorize]
+        //public async Task<IActionResult> ChangePassword()
+        //{
+
+        //}
+
+
+        //[Authorize]
+        //[ValidateAntiForgeryToken]
+        //[HttpPost]
+        //public async Task<IActionResult> ChangePassword()
+        //{
+
+        //}
 
         public IActionResult Login(string returnUrl = null)
         {
@@ -141,10 +224,11 @@ namespace MobieStoreWeb.Controllers
             return View(viewModel);
         }
 
-        
+
         public IActionResult AccessDenied()
         {
             return View();
         }
+        private bool IsCurrentUserPage(string userName) => _signInManager.IsSignedIn(User) && userName == User.Identity.Name;
     }
 }
