@@ -141,7 +141,6 @@ namespace MobieStoreWeb.Controllers
                         var content = @$"<html><head>{style}</head><body> <div id=""body""> <p>Order Bill</p><table> <thead> <tr> <th>Name</th> <th>Price</th> <th>Quantity</th> <th>Total</th> </tr></thead> <tbody>{tableBody}</tbody> <tfoot>{tableFoot}</tfoot> </table> <p><b>Ngay dat hang:</b>{order.OrderDate}</p><p><b>Ma hoa don:</b>{order.Id}</p><p><b>Tong tien dat hang:</b>{viewModel.Cart.Total}</p><br><p>Thanks for shopping at my fucking shop dm cai template lon!!!</p><p>Call center</p></div></body></html>";
                         var user = await _userManager.GetUserAsync(User);
                         await _emailSender.SendEmailAsync(user.Email, "E-Bill ", content);
-
                     }
                     HttpContext.Session.Set<CartViewModel>(SessionKeyCart, null);
                 }

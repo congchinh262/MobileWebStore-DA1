@@ -100,20 +100,56 @@ namespace MobieStoreWeb.Controllers
             return View(order);
         }
 
-        //[Authorize]
-        //public async Task<IActionResult> ChangePassword()
-        //{
+        [Authorize]
+        public async Task<IActionResult> ChangePassword()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
 
-        //}
+            var hasPassword = await _userManager.HasPasswordAsync(user);
+            if (!hasPassword)
+            {
+                return RedirectToPage("./SetPassword");
+            }
+
+            return View();
+        }
 
 
-        //[Authorize]
-        //[ValidateAntiForgeryToken]
-        //[HttpPost]
-        //public async Task<IActionResult> ChangePassword()
-        //{
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
 
-        //}
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user, viewModel.OldPassword, viewModel.NewPassword);
+            if (!changePasswordResult.Succeeded)
+            {
+                foreach (var error in changePasswordResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View(viewModel);
+            }
+
+            await _signInManager.RefreshSignInAsync(user);
+            _logger.LogInformation("User changed their password successfully.");
+
+            return RedirectToAction(nameof(ChangePassword));
+        }
 
         public IActionResult Login(string returnUrl = null)
         {
