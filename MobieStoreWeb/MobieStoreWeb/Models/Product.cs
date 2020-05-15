@@ -60,6 +60,8 @@ namespace MobieStoreWeb.Models
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
+        
+
     }
 
     public enum ProductStatus:byte {

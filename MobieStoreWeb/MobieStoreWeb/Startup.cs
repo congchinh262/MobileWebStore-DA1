@@ -87,6 +87,7 @@ namespace MobieStoreWeb
             });
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddControllersWithViews()
+                .AddNewtonsoftJson()
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
             services.AddRazorPages();

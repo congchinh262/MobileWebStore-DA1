@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
 
 namespace MobieStoreWeb.Models
@@ -24,5 +25,6 @@ namespace MobieStoreWeb.Models
         [Display(Name = "Rating")]
         public byte Rating { get; set; }
 
+        public DateTime CreatedDate { get; set; }
     }
 }

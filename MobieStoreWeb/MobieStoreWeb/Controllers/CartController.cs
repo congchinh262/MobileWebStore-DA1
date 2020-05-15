@@ -21,9 +21,13 @@ namespace MobieStoreWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToCart(int id)
+        public IActionResult AddToCart(int id, int? quantity)
         {
             var product = _context.Products.Find(id);
+            quantity = !quantity.HasValue ? 1 :
+                        quantity > 5 ? 5 :
+                        quantity < 1 ? 1 :
+                        quantity.Value;
             if (product == null)
             {
                 return NotFound();
@@ -45,13 +49,13 @@ namespace MobieStoreWeb.Controllers
                     CategoryId = product.CategoryId,
                     ManufacturerId = product.ManufacturerId,
                     Price = product.Price,
-                    Quantity = 1,
+                    Quantity = quantity.Value,
                     Image = product.Image,
                 });
             }
             else
             {
-                item.Quantity++;
+                item.Quantity+=quantity.Value;
                 if (item.Quantity > 5)
                 {
                     item.Quantity = 5;
