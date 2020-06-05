@@ -38,7 +38,7 @@ var myBarChart = new Chart(ctx, {
       backgroundColor: "#4e73df",
       hoverBackgroundColor: "#2e59d9",
       borderColor: "#4e73df",
-      data: [4215, 5312, 6251, 7841, 9821, 14984],
+      data: [8000, 5312, 6251, 7841, 9821, 14984],
     }],
   },
   options: {
@@ -109,3 +109,9 @@ var myBarChart = new Chart(ctx, {
     },
   }
 });
+
+/*
+1. vi?t 1 api l?y data json
+2. dashboard vi?t các interval ?? call function get d? li?u 
+3. c?p nh?t d? li?u trên chart l?i
+ */
