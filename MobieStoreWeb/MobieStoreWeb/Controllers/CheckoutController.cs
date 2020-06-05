@@ -114,8 +114,8 @@ namespace MobieStoreWeb.Controllers
                         product.Quantity -= item.Quantity;
                         if (product.Quantity < 0 || !(product.Status == ProductStatus.Available))
                         {
-                            // Trả 1 View("ErrorQuantity", $"Mặt hàng: {product.Name} đéo đủ số lượng ");
-                            return BadRequest();
+                           
+                            return View("ErrorQuantity");
                         }
 
                         orderDetails.Add(new OrderDetail
