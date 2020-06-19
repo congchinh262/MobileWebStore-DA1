@@ -120,7 +120,7 @@
   <data name="Welcome" xml:space="preserve">
     <value>Xin chào</value>
   </data>
-  <data name="Category" xml:space="preserve">
+  <data name="Categories" xml:space="preserve">
     <value>Loại</value>
   </data>
 </root>
