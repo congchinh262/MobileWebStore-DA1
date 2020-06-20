@@ -20,7 +20,7 @@
     <label class="label label-primary">Order Status</label>
     <div id="Status" class="form-actions no-color">
         <p style="margin-top:20px">
-            <select class="form-control"
+            <select id="status" name="status" class="form-control"
                     asp-items="@ViewBag.Status" >
             </select>
         </p>
@@ -28,7 +28,7 @@
     <label class="label label-primary">Payment Method</label>
     <div id="paymentMethod" class="form-actions no-color">
         <p style="margin-top:20px">
-            <select class="form-control"
+            <select id="paymentMethod" name="paymentMethod" class="form-control"
                     asp-items="@ViewBag.paymentMethod">
             </select>
         </p>
@@ -36,15 +36,15 @@
     <label class="label label-primary">Payment Status</label>
     <div id="PaymentStatus" class="form-actions no-color">
         <p style="margin-top:20px">
-            <select class="form-control"
+            <select id="paymentStatus" name="paymentStatus" class="form-control"
                     asp-items="@ViewBag.PaymentStatus">
             </select>
         </p>
     </div>
     <label class="label label-primary">Delivery Option</label>
-    <div id="PaymentStatus" class="form-actions no-color">
+    <div id="DeliveryOption" class="form-actions no-color">
         <p style="margin-top:20px">
-            <select class="form-control"
+            <select id="deliveryOption" name="deliveryOption" class="form-control"
                     asp-items="@ViewBag.DeliveryOption">
             </select>
         </p>

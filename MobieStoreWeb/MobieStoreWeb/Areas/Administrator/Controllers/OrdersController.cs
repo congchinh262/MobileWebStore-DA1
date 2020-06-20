@@ -24,7 +24,7 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             _context = context;
         }
 
-        public IActionResult Index(string searchName, OrderStatus? status, PaymentMethod? paymentMethod, PaymentStatus? paymentStatus, DeliveryOption? deliveryOption)
+        public IActionResult Index(/*string searchName,*/ OrderStatus? status, PaymentMethod? paymentMethod, PaymentStatus? paymentStatus, DeliveryOption? deliveryOption)
         {
 
             var orders = _context.Orders.AsQueryable();
@@ -45,17 +45,17 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             {
                 orders = orders.Where(o => o.DeliveryOption == deliveryOption);
             }
-            if (!string.IsNullOrWhiteSpace(searchName))
-            {
-                orders = orders.Where(o => o.BillingName.Contains(searchName));
-            }
+            //if (!string.IsNullOrWhiteSpace(searchName))
+            //{
+            //    orders = orders.Where(o => o.BillingName.Contains(searchName));
+            //}
 
            
             ViewBag.Status = new SelectList(SelectListHelper.GetEnumrableList<OrderStatus>(), "Value", "Text", status);
             ViewBag.paymentMethod = new SelectList(SelectListHelper.GetEnumrableList<PaymentMethod>(), "Value", "Text", paymentMethod);
             ViewBag.PaymentStatus = new SelectList(SelectListHelper.GetEnumrableList<PaymentStatus>(), "Value", "Text", paymentStatus);
             ViewBag.DeliveryOption = new SelectList(SelectListHelper.GetEnumrableList<DeliveryOption>(), "Value", "Text", deliveryOption);
-            ViewBag.SearchName = searchName;
+            //ViewBag.SearchName = searchName;
             return View(orders);
         }
 
