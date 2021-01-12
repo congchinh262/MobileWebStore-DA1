@@ -24,11 +24,6 @@ namespace MobieStoreWeb.Areas.Administrator.ViewModels
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [Required]
-        [Range(12, int.MaxValue, ErrorMessage = "The {0} must be at least {1}.")]
-        [Display(Name = "Size")]
-        public int Size { get; set; }
-
         [Range(0, double.PositiveInfinity, ErrorMessage = "{0} must be at least {1}.")]
         [Required(ErrorMessage = "{0} is required.")]
         [Display(Name = "Price")]

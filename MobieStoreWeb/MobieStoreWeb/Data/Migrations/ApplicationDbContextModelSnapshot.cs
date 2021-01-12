@@ -247,11 +247,26 @@ namespace MobieStoreWeb.Data.Migrations
                         new
                         {
                             Id = (short)1,
-                            Name = "Sneaker"
+                            Name = "Mobile"
                         },
                         new
                         {
                             Id = (short)2,
+                            Name = "Tablet"
+                        },
+                        new
+                        {
+                            Id = (short)3,
+                            Name = "Watch"
+                        },
+                        new
+                        {
+                            Id = (short)4,
+                            Name = "Laptop"
+                        },
+                        new
+                        {
+                            Id = (short)5,
                             Name = "Accessory"
                         });
                 });
@@ -276,27 +291,27 @@ namespace MobieStoreWeb.Data.Migrations
                         new
                         {
                             Id = (short)1,
-                            Name = "Adidas"
+                            Name = "Apple"
                         },
                         new
                         {
                             Id = (short)2,
-                            Name = "Nike"
+                            Name = "Samsung"
                         },
                         new
                         {
                             Id = (short)3,
-                            Name = "Vans"
+                            Name = "Oppo"
                         },
                         new
                         {
                             Id = (short)4,
-                            Name = "Convert"
+                            Name = "Xiaomi"
                         },
                         new
                         {
                             Id = (short)5,
-                            Name = "Local brand"
+                            Name = "Huawei"
                         });
                 });
 
@@ -413,9 +428,6 @@ namespace MobieStoreWeb.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Size")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
