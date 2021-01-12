@@ -33,7 +33,7 @@
                                 <tr>
                                     <td><img src="~/images/products/@item.Image" style="width: 110px" /></td>
                                     <td>@item.Name</td>
-                                    <td>@item.Price</td>
+                                    <td>$ @item.Price.ToString().Replace(",0000", String.Empty)</td>
                                     <td>
                                         <input type="hidden" name="Items[@index].Id" value="@item.Id" />
                                         <input type="number" name="Items[@index].Quantity" value="@item.Quantity" min="1" max="5" />
@@ -51,7 +51,7 @@
                     </table>
                     <div>Total: @Model.Total VND</div>
                     <button type="submit" class="btn btn-primary">Update Quantity</button>
-                    <a @*asp-controller="Checkout" asp-action="Index"*@ href="#" class="btn btn-primary">Checkout</a>
+                    <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Checkout</a>
                 </form>
                 <form asp-action="RemoveFromCart" method="post" id="remove-form" class="hidden">
                     <input type="hidden" name="Id" />
