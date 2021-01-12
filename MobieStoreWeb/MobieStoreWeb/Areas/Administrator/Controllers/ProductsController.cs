@@ -88,7 +88,6 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                     Id = viewModel.Id,
                     Name = viewModel.Name,
                     CategoryId = viewModel.CategoryId,
-                    Size=viewModel.Size,
                     Quantity = viewModel.Quantity,
                     ManufacturerId = viewModel.ManufacturerId,
                     Description = viewModel.Description,
@@ -133,7 +132,6 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
             {
                 Id = product.Id,
                 Name = product.Name,
-                Size=product.Size,
                 Price = product.Price,
                 ManufacturerId = product.ManufacturerId,
                 CategoryId = product.CategoryId,
@@ -176,12 +174,10 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                     product.Name = viewModel.Name;
                     product.CategoryId = viewModel.CategoryId;
                     product.ManufacturerId = viewModel.ManufacturerId;
-                    product.Size = viewModel.Size;
                     product.Price = viewModel.Price;
                     product.PublishDate = viewModel.PublishDate;
                     product.Quantity = viewModel.Quantity;
                     product.Status = viewModel.Status;
-                    product.Description = viewModel.Description;
 
                     if (viewModel.ImageFile != null)
                     {

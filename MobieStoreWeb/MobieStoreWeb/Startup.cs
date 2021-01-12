@@ -146,7 +146,7 @@ namespace MobieStoreWeb
         {
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            string[] roleNames = { "Admin", "Manager", "Employee", "Custommer VIP","Custommer Loyalty" };
+            string[] roleNames = { "Admin", "Manager", "Employee", "Customer" };
             IdentityResult roleResult;
             foreach (var roleName in roleNames)
             {
