@@ -9,6 +9,8 @@ namespace MobieStoreWeb.Models
 {
     public class ApplicationUser : IdentityUser
     {
+
+
         [StringLength(450)]
         [Display(Name = "Name")]
         [PersonalData]

@@ -62,7 +62,8 @@ namespace MobieStoreWeb.Models
 
         [Required(ErrorMessage = "{0} is required.")]
         [Display(Name = "Order Date")]
-        public DateTime OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }        
+     
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
 
 

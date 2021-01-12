@@ -97,7 +97,6 @@ namespace MobieStoreWeb.Controllers
                         PaymentStatus = PaymentStatus.Pending,
                         UserId = viewModel.IsGuest ? null : _userManager.GetUserId(User)
                     };
-
                     var orderDetails = new List<OrderDetail>();
                     foreach (var item in viewModel.Cart.Items)
                     {
@@ -105,11 +104,6 @@ namespace MobieStoreWeb.Controllers
                         {
                             item.Quantity = 1;
                         }
-                        if (item.Quantity > 5)
-                        {
-                            item.Quantity = 5;
-                        }
-
                         var product = _context.Products.Find(item.Id);
                         product.Quantity -= item.Quantity;
                         if (product.Quantity < 0 || !(product.Status == ProductStatus.Available))

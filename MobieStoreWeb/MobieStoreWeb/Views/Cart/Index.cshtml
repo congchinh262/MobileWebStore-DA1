@@ -49,9 +49,9 @@
                             }
                         </tbody>
                     </table>
-                    <div>Total: @Model.Total ĐLĐ</div>
+                    <div>Total: @Model.Total VND</div>
                     <button type="submit" class="btn btn-primary">Update Quantity</button>
-                    <a asp-controller="Checkout" asp-action="Index" class="btn btn-primary">Checkout</a>
+                    <a @*asp-controller="Checkout" asp-action="Index"*@ href="#" class="btn btn-primary">Checkout</a>
                 </form>
                 <form asp-action="RemoveFromCart" method="post" id="remove-form" class="hidden">
                     <input type="hidden" name="Id" />

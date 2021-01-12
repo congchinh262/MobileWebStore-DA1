@@ -79,53 +79,39 @@ namespace MobieStoreWeb.Data
            new Category
            {
                Id = 1,
-               Name = "Mobile"
+               Name = "Sneaker"
            },
            new Category
            {
                Id = 2,
-               Name = "Tablet"
-           },
-           new Category
-           {
-               Id = 3,
-               Name = "Watch"
-           },
-           new Category
-           {
-               Id = 4,
-               Name = "Laptop"
-           },
-           new Category
-           {
-               Id = 5,
                Name = "Accessory"
-           });
+           }
+          );
             builder.Entity<Manufacturer>().HasData(
             new Manufacturer
             {
                 Id = 1,
-                Name = "Apple"
+                Name = "Adidas"
             },
             new Manufacturer
             {
                 Id = 2,
-                Name = "Samsung"
+                Name = "Nike"
             },
             new Manufacturer
             {
                 Id = 3,
-                Name = "Oppo"
+                Name = "Vans"
             },
             new Manufacturer
             {
                 Id = 4,
-                Name = "Xiaomi"
+                Name = "Convert"
             },
             new Manufacturer
             {
                 Id = 5,
-                Name = "Huawei"
+                Name = "Local brand"
             });
         }
     }
