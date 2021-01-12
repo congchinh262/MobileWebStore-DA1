@@ -39,6 +39,11 @@ namespace MobieStoreWeb.ViewModels
         [Display(Name = "Manufacturer")]
         public short ManufacturerId { get; set; }
 
+        [StringLength(256, ErrorMessage = "{0} must be less than {1} character.")]
+        [Required(ErrorMessage = "{0} is required.")]
+        [Display(Name = "Size")]
+        public string Size { get; set; }
+
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
 

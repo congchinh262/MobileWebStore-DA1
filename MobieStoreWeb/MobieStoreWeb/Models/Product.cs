@@ -28,10 +28,10 @@ namespace MobieStoreWeb.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
+        [StringLength(256, ErrorMessage = "{0} must be less than {1} character.")]
         [Required(ErrorMessage = "{0} is required.")]
-        [Display(Name ="Size")]
-        public int Size { get; set; }
-
+        [Display(Name = "Size")]
+        public string Size { get; set; }
 
         [Range(0, double.PositiveInfinity, ErrorMessage = "{0} must be at least {1}.")]
         [Required(ErrorMessage = "{0} is required.")]

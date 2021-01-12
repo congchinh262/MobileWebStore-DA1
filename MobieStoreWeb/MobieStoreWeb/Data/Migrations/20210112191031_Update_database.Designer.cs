@@ -10,8 +10,8 @@ using MobieStoreWeb.Data;
 namespace MobieStoreWeb.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210112102745_alter_product_table")]
-    partial class alter_product_table
+    [Migration("20210112191031_Update_database")]
+    partial class Update_database
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -278,7 +278,7 @@ namespace MobieStoreWeb.Data.Migrations
                         new
                         {
                             Id = (short)1,
-                            Name = "Adidas"
+                            Name = "Vans"
                         },
                         new
                         {
@@ -288,17 +288,12 @@ namespace MobieStoreWeb.Data.Migrations
                         new
                         {
                             Id = (short)3,
-                            Name = "Vans"
+                            Name = "Adidas"
                         },
                         new
                         {
                             Id = (short)4,
                             Name = "Convert"
-                        },
-                        new
-                        {
-                            Id = (short)5,
-                            Name = "Local brand"
                         });
                 });
 
@@ -417,8 +412,10 @@ namespace MobieStoreWeb.Data.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("Size")
-                        .HasColumnType("int");
+                    b.Property<string>("Size")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
 
                     b.Property<string>("Status")
                         .IsRequired()

@@ -33,7 +33,7 @@
                                 <tr>
                                     <td><img src="~/images/products/@item.Image" style="width: 110px" /></td>
                                     <td>@item.Name</td>
-                                    <td>$ @item.Price.ToString().Replace(",0000", String.Empty)</td>
+                                    <td>@item.Price</td>
                                     <td>
                                         <input type="hidden" name="Items[@index].Id" value="@item.Id" />
                                         <input type="number" name="Items[@index].Quantity" value="@item.Quantity" min="1" max="5" />

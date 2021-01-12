@@ -2,7 +2,7 @@
 
 namespace MobieStoreWeb.Data.Migrations
 {
-    public partial class alter_product_table : Migration
+    public partial class Update_database : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,11 +21,17 @@ namespace MobieStoreWeb.Data.Migrations
                 keyColumn: "Id",
                 keyValue: (short)5);
 
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.DeleteData(
+                table: "Manufacturers",
+                keyColumn: "Id",
+                keyValue: (short)5);
+
+            migrationBuilder.AddColumn<string>(
                 name: "Size",
                 table: "Products",
+                maxLength: 256,
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
 
             migrationBuilder.UpdateData(
                 table: "Categories",
@@ -46,7 +52,7 @@ namespace MobieStoreWeb.Data.Migrations
                 keyColumn: "Id",
                 keyValue: (short)1,
                 column: "Name",
-                value: "Adidas");
+                value: "Vans");
 
             migrationBuilder.UpdateData(
                 table: "Manufacturers",
@@ -60,7 +66,7 @@ namespace MobieStoreWeb.Data.Migrations
                 keyColumn: "Id",
                 keyValue: (short)3,
                 column: "Name",
-                value: "Vans");
+                value: "Adidas");
 
             migrationBuilder.UpdateData(
                 table: "Manufacturers",
@@ -68,13 +74,6 @@ namespace MobieStoreWeb.Data.Migrations
                 keyValue: (short)4,
                 column: "Name",
                 value: "Convert");
-
-            migrationBuilder.UpdateData(
-                table: "Manufacturers",
-                keyColumn: "Id",
-                keyValue: (short)5,
-                column: "Name",
-                value: "Local brand");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -135,12 +134,10 @@ namespace MobieStoreWeb.Data.Migrations
                 column: "Name",
                 value: "Xiaomi");
 
-            migrationBuilder.UpdateData(
+            migrationBuilder.InsertData(
                 table: "Manufacturers",
-                keyColumn: "Id",
-                keyValue: (short)5,
-                column: "Name",
-                value: "Huawei");
+                columns: new[] { "Id", "Name" },
+                values: new object[] { (short)5, "Huawei" });
         }
     }
 }

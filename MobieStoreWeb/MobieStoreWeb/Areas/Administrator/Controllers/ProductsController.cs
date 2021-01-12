@@ -90,6 +90,7 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                     CategoryId = viewModel.CategoryId,
                     Quantity = viewModel.Quantity,
                     ManufacturerId = viewModel.ManufacturerId,
+                    Size=viewModel.Size,
                     Description = viewModel.Description,
                     Price = viewModel.Price,
                     PublishDate = viewModel.PublishDate,
@@ -133,6 +134,7 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
+                Size=product.Size,
                 ManufacturerId = product.ManufacturerId,
                 CategoryId = product.CategoryId,
                 PublishDate = product.PublishDate,
@@ -174,6 +176,7 @@ namespace MobieStoreWeb.Areas.Administrator.Controllers
                     product.Name = viewModel.Name;
                     product.CategoryId = viewModel.CategoryId;
                     product.ManufacturerId = viewModel.ManufacturerId;
+                    product.Size = viewModel.Size;
                     product.Price = viewModel.Price;
                     product.PublishDate = viewModel.PublishDate;
                     product.Quantity = viewModel.Quantity;

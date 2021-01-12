@@ -48,6 +48,7 @@ namespace MobieStoreWeb.Controllers
                     Name = product.Name,
                     CategoryId = product.CategoryId,
                     ManufacturerId = product.ManufacturerId,
+                    Size=product.Size,
                     Price = product.Price,
                     Quantity = quantity.Value,
                     Image = product.Image,

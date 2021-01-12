@@ -138,7 +138,7 @@ namespace MobieStoreWeb.Controllers
                         });
                         var tableFoot = @$"<tr><th colspan=""2""></th><th>Totals:</th><th>{viewModel.Cart.Total}</th></tr>";
                         var style = "<style>.colored{color: blue;}#body{font-size: 14px;}table{border-collapse: collapse; width: 100%;}th{text-align: left;}th, td{padding: .5rem 1rem;}thead{background-color: #cceeff;}tr{border: 1px groove #fafafa;}</style>";
-                        var content = @$"<html><head>{style}</head><body> <div id=""body""> <p>Order Bill</p><table> <thead> <tr> <th>Name</th> <th>Price</th> <th>Quantity</th> <th>Total</th> </tr></thead> <tbody>{tableBody}</tbody> <tfoot>{tableFoot}</tfoot> </table> <p><b>Ngay dat hang:</b>{order.OrderDate}</p><p><b>Ma hoa don:</b>{order.Id}</p><p><b>Tong tien dat hang:</b>{viewModel.Cart.Total}</p><br><p>Thanks for shopping at my fucking shop dm cai template lon!!!</p><p>Call center</p></div></body></html>";
+                        var content = @$"<html><head>{style}</head><body> <div id=""body""> <p>Order Bill</p><table> <thead> <tr> <th>Name</th> <th>Price</th> <th>Quantity</th> <th>Total</th> </tr></thead> <tbody>{tableBody}</tbody> <tfoot>{tableFoot}</tfoot> </table> <p><b>Ngay dat hang:</b>{order.OrderDate}</p><p><b>Ma hoa don:</b>{order.Id}</p><p><b>Tong tien dat hang:</b>{viewModel.Cart.Total}</p><br><p>Thanks for shopping at my shop!!!</p><p>Call center</p></div></body></html>";
                         var user = await _userManager.GetUserAsync(User);
                         await _emailSender.SendEmailAsync(user.Email, "E-Bill ", content);
                     }
